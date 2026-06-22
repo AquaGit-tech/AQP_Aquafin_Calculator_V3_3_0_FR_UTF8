@@ -2,7 +2,7 @@
   "name": "Calculateur Aquafin",
   "short_name": "Aquafin",
   "description": "Calculateur de consommation Aquafin pour les applicateurs",
-  "start_url": "AQP_Aquafin_Calculator_V3_3_0_FR_UTF8.html",
+  "start_url": ".",
   "scope": ".",
   "display": "standalone",
   "orientation": "any",
