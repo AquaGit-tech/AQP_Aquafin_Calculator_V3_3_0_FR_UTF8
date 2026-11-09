@@ -379,6 +379,7 @@
                         <option value="1kplus">Aquafin 1K‑PLUS</option>
                         <option value="2k">Aquafin 2K</option>
                         <option value="rb400">Aquafin RB400</option>
+                        <option value="m30d" id="opt-m30d">Asocret M30</option>
                         <option value="m30" id="opt-m30">Asocret M30</option>
                     </select>
                 </div>
@@ -392,6 +393,9 @@
                     <select id="aantalLagen">
                         <option value="0" selected></option>
                     </select>
+                </div>
+                <div class="input-with-unit" id="dikteSelWrap" style="display: none;">
+                    <select id="dikteSel"></select>
                 </div>
                 <div class="input-with-unit" id="dikteWrap" style="display: none;">
                     <input type="text" inputmode="decimal" id="dikteMm" placeholder="">
@@ -437,7 +441,7 @@
 
     <script>
         // === Vertalingen (per taal ingevuld door de generator) ===
-        var T = {"lang": "fr", "locale": "fr-BE", "title": "Calculateur Aquafin", "clientPh": "Nom du client ou adresse du chantier", "productLabel": "Produit", "productPh": "Choisissez un produit Aquafin", "layersLabel": "Nombre de couches", "layersPh": "Nombre de couches", "surfaceLabel": "Surface totale", "surfacePh": "Surface totale (m²)", "resultLabel": "Consommation", "resetAria": "Réinitialiser", "mengTitle": "Aide au mélange", "mengPoederPh": "Poudre (kg)", "ratioWord": "rapport", "optWord": "optionnel", "takeWord": "À emporter", "bagsWord": "sacs", "setsWord": "kits", "layerSingular": "couche", "layerPlural": "couches", "colon": " :", "totalWord": "total", "powder": "poudre", "liquid": "liquide", "colWater": "eau", "colWaterMax": "eau (max.)", "maxWord": "max.", "unitKg": "kg", "unitL": "L", "unitM2": "m²", "noteBoldTpl": "{naam} est un produit à 2 composants.", "noteRestTpl": "Poudre + liquide (dispersion), rapport {ratio} - livré en kit, mélangez bien les deux composants. L'eau est optionnelle, {watermax}, uniquement pour la maniabilité.", "waterMaxTpl": "max. {amt} L par kit de {setkg} kg", "m30Option": "Asocret M30 (finition)", "dikteLabel": "Épaisseur couche de finition (mm)", "resultAfwerk": "Consommation couche de finition", "afwerkWord": "finition", "m30Note": "Asocret M30 - uniquement pour la couche de finition, en 1 couche. Standard 5 mm (FT : 3-30 mm). Consommation 1,4 kg/m² par mm. 1 composant : eau 4,5-5,25 L par sac de 25 kg.", "plusNote": "Aquafin 1K‑PLUS - même consommation et même eau qu'Aquafin 1K (6,7 L par sac de 25 kg). Durée d'utilisation d'environ 30 minutes seulement : gâchez max. env. 4 kg par personne (+ 1,07 L d'eau, env. 2 m² par couche) ; à la machine 1 sac par remplissage. Moins par temps chaud. Recouvrable après environ 90 minutes, max. 2 mm par couche. Ne pas regâcher un mortier qui commence à raidir avec de l'eau ou du mortier frais.", "footer": "Consommation selon le standard AQP (calculateur d'étanchéité V7) et les fiches techniques Schomburg. Indicatif. Liquide (2K/RB400) en L pour une densité de dispersion d'environ 1,0 kg/L."};
+        var T = {"lang": "fr", "locale": "fr-BE", "title": "Calculateur Aquafin", "clientPh": "Nom du client ou adresse du chantier", "productLabel": "Produit", "productPh": "Choisissez un produit Aquafin", "layersLabel": "Nombre de couches", "layersPh": "Nombre de couches", "surfaceLabel": "Surface totale", "surfacePh": "Surface totale (m²)", "resultLabel": "Consommation", "resetAria": "Réinitialiser", "mengTitle": "Aide au mélange", "mengPoederPh": "Poudre (kg)", "ratioWord": "rapport", "optWord": "optionnel", "takeWord": "À emporter", "bagsWord": "sacs", "setsWord": "kits", "layerSingular": "couche", "layerPlural": "couches", "colon": " :", "totalWord": "total", "powder": "poudre", "liquid": "liquide", "colWater": "eau", "colWaterMax": "eau (max.)", "maxWord": "max.", "unitKg": "kg", "unitL": "L", "unitM2": "m²", "noteBoldTpl": "{naam} est un produit à 2 composants.", "noteRestTpl": "Poudre + liquide (dispersion), rapport {ratio} - livré en kit, mélangez bien les deux composants. L'eau est optionnelle, {watermax}, uniquement pour la maniabilité.", "waterMaxTpl": "max. {amt} L par kit de {setkg} kg", "m30dOption": "Asocret M30 (couche d'étanchéité)", "dikteLabelD": "Épaisseur couche d'étanchéité", "dichtWord": "étanchéité", "unitCm": "cm", "m30dNote": "Asocret M30 - couche d'étanchéité en 1 couche, 1 cm (standard AQP), 1,5 cm ou 2 cm. Consommation 1,4 kg/m² par mm (1 cm = 14 kg/m²). 1 composant : eau 4,5-5,25 L par sac de 25 kg.", "m30Option": "Asocret M30 (finition)", "dikteLabel": "Épaisseur couche de finition (mm)", "resultAfwerk": "Consommation couche de finition", "afwerkWord": "finition", "m30Note": "Asocret M30 - uniquement pour la couche de finition, en 1 couche. Standard 5 mm (FT : 3-30 mm). Consommation 1,4 kg/m² par mm. 1 composant : eau 4,5-5,25 L par sac de 25 kg.", "plusNote": "Aquafin 1K‑PLUS - même consommation et même eau qu'Aquafin 1K (6,7 L par sac de 25 kg). Durée d'utilisation d'environ 30 minutes seulement : gâchez max. env. 4 kg par personne (+ 1,07 L d'eau, env. 2 m² par couche) ; à la machine 1 sac par remplissage. Moins par temps chaud. Recouvrable après environ 90 minutes, max. 2 mm par couche. Ne pas regâcher un mortier qui commence à raidir avec de l'eau ou du mortier frais.", "footer": "Consommation selon le standard AQP (calculateur d'étanchéité V7) et les fiches techniques Schomburg. Indicatif. Liquide (2K/RB400) en L pour une densité de dispersion d'environ 1,0 kg/L."};
 
         // Gezaghebbende verbruikswaarden (taalneutraal): AQP dichtingscalculator V7 + Schomburg TDS.
         var PRODUCTS = {
@@ -463,6 +467,14 @@
                 naam: 'Aquafin RB400', perLaag: 2.40, tweeComp: true, ratioA: 1.5,
                 setKg: 24, poederPerSet: 14.4, vloeistofPerSet: 9.6, waterMaxPerSet: 0.24,
                 lagenOpties: [{ n: 2 }]
+            },
+            // V4.2.0: Asocret M30 als DICHTINGSLAAG (Wim 09/11/2026): 1 laag, vaste diktes 10/15/20 mm
+            // (standaard 10 mm = AQP-norm bij kelderdichting). Zelfde motor als de afwerkingslaag.
+            'm30d': {
+                naam: 'Asocret M30', afwerking: true, dichting: true, tweeComp: false,
+                kgPerMm: 1.4, verpakKg: 25, waterPerKg: 4.875 / 25,
+                waterMinPerKg: 4.5 / 25, waterMaxPerKg: 5.25 / 25,
+                dikteOpties: [10, 15, 20], dikteDefault: 10
             },
             // Asocret M30: afwerkingslaag, altijd 1 laag, dikte-gedreven (TDS: 1,4 kg/m2/mm).
             // 1-component (poeder + water). Water TDS 4,5-5,25 L/25 kg -> meng-hulp: middelpunt 4,875.
@@ -553,11 +565,23 @@
         function applyProductMode() {
             var p = PRODUCTS[productSelect.value];
             var afwerk = !!(p && p.afwerking);
+            var vast = !!(p && p.dikteOpties);   // V4.2.0: dichtingslaag = keuzelijst vaste diktes
             document.getElementById('lagenWrap').style.display = afwerk ? 'none' : '';
-            document.getElementById('dikteWrap').style.display = afwerk ? '' : 'none';
-            document.getElementById('gh-lagen').textContent = afwerk ? T.dikteLabel : T.layersLabel;
+            document.getElementById('dikteWrap').style.display = (afwerk && !vast) ? '' : 'none';
+            document.getElementById('dikteSelWrap').style.display = vast ? '' : 'none';
+            document.getElementById('gh-lagen').textContent = afwerk ? (p.dichting ? T.dikteLabelD : T.dikteLabel) : T.layersLabel;
+            if (vast) {
+                var ds = document.getElementById('dikteSel');
+                ds.innerHTML = '';
+                p.dikteOpties.forEach(function(mm) {
+                    var o = document.createElement('option');
+                    o.value = mm; o.textContent = nf(mm / 10, (mm % 10) ? 1 : 0) + ' ' + T.unitCm + ' (' + mm + ' mm)';
+                    ds.appendChild(o);
+                });
+                ds.value = String(p.dikteDefault);
+            }
             var d = document.getElementById('dikteMm');
-            if (afwerk && !d.value) { d.value = String(p.dikteDefault); updateUnitPosition(d); }
+            if (afwerk && !vast && !d.value) { d.value = String(p.dikteDefault); updateUnitPosition(d); }
         }
 
         productSelect.classList.add('placeholder-active');
@@ -570,6 +594,7 @@
             mengBuild();
         });
         lagenSelect.addEventListener('change', function() { styleSelect(this); calculate(); });
+        document.getElementById('dikteSel').addEventListener('change', function() { calculate(); });
         document.getElementById('dikteMm').addEventListener('input', function() {
             calculate(); updateUnitPosition(this);
         });
@@ -678,6 +703,7 @@
             document.getElementById('resetBtn').setAttribute('aria-label', T.resetAria);
             document.getElementById('gh-product').textContent = T.productLabel;
             productSelect.options[0].textContent = T.productPh;
+            document.getElementById('opt-m30d').textContent = T.m30dOption;
             document.getElementById('opt-m30').textContent = T.m30Option;
             document.getElementById('gh-lagen').textContent = T.layersLabel;
             document.getElementById('gh-opp').textContent = T.surfaceLabel;
@@ -775,9 +801,9 @@
             }
             if (!p || oppervlakte <= 0) { toonLeeg(); return; }
 
-            // === Asocret M30: UITSLUITEND de afwerkingslaag, altijd 1 laag, dikte-gedreven ===
+            // === Asocret M30: dichtingslaag (vaste diktes) of afwerkingslaag (vrij), altijd 1 laag, dikte-gedreven ===
             if (p.afwerking) {
-                var dikte = pnum(document.getElementById('dikteMm').value);
+                var dikte = p.dikteOpties ? pnum(document.getElementById('dikteSel').value) : pnum(document.getElementById('dikteMm').value);
                 if (dikte <= 0) { toonLeeg(); return; }
                 document.getElementById('resultLabel').textContent = T.resultLabel;
                 document.getElementById('headRow').innerHTML =
@@ -786,9 +812,9 @@
                 var m30poeder = hoeveelCel(m30kg, T.unitKg, p.verpakKg, T.unitKg);
                 var m30water = nf(m30kg * p.waterMinPerKg, 1) + '-' + nf(m30kg * p.waterMaxPerKg, 1) + ' ' + T.unitL;
                 document.getElementById('lagenBody').innerHTML =
-                    '<tr><td>' + T.afwerkWord + T.colon + '</td><td>' + m30poeder + '</td><td>' + m30water + '</td></tr>';
+                    '<tr><td>' + (p.dichting ? T.dichtWord : T.afwerkWord) + T.colon + '</td><td>' + m30poeder + '</td><td>' + m30water + '</td></tr>';
                 document.getElementById('totaalRow').innerHTML = '';
-                noteEl.innerHTML = T.m30Note;
+                noteEl.innerHTML = p.dichting ? T.m30dNote : T.m30Note;
                 noteEl.style.display = 'block';
                 ta.innerHTML = T.takeWord + T.colon + ' <b>' + Math.ceil(m30kg / p.verpakKg - 1e-9) + ' ' + T.bagsWord + '</b>';
                 ta.style.display = 'block';
